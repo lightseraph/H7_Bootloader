@@ -68,7 +68,8 @@ pFunction JumpToApplication;
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-
+  // uint8_t temp1[15] = "hello sudaroot\r\n";
+  // uint8_t *temp3 = (uint8_t *)QSPI_BASE;
   /* USER CODE END 1 */
 
   /* Enable I-Cache---------------------------------------------------------*/
@@ -99,22 +100,29 @@ int main(void)
   MX_USART1_UART_Init();
   MX_QUADSPI_Init();
   /* USER CODE BEGIN 2 */
-  // NORFLASH_MemoryMappedMode();
 
-  SysTick->CTRL = 0;
-  SysTick->LOAD = 0;
-  SysTick->VAL = 0;
-  __disable_irq();
-  JumpToApplication = (pFunction)(*(__IO uint32_t *)(QSPI_BASE + 4)); // 设置起始地址
-  __set_MSP(*(__IO uint32_t *)QSPI_BASE);                             // 设置主堆栈指针
+  // NORFLASH_Erase_Sector(0);
+  // NORFLASH_Write(temp1, 0, 15);
+  NORFLASH_MemoryMappedMode();
 
-  JumpToApplication();
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    HAL_Delay(4000);
+    printf("bootloader will jump to app\n");
+    // HAL_Delay(2000);
+    // printf("On ex_flash: %c%c%c%c%c\r\n", temp3[0], temp3[1], temp3[2], temp3[3], temp3[4]);
+    SysTick->CTRL = 0;
+    SysTick->LOAD = 0;
+    SysTick->VAL = 0;
+    __disable_irq();
+    JumpToApplication = (pFunction)(*(__IO uint32_t *)(QSPI_BASE + 4)); // 设置起始地址
+    __set_MSP(*(__IO uint32_t *)QSPI_BASE);                             // 设置主堆栈指针
+
+    JumpToApplication();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
