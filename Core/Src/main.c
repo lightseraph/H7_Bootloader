@@ -103,7 +103,6 @@ int main(void)
 
   // NORFLASH_Erase_Sector(0);
   // NORFLASH_Write(temp1, 0, 15);
-  NORFLASH_MemoryMappedMode();
 
   /* USER CODE END 2 */
 
@@ -116,6 +115,7 @@ int main(void)
       HAL_GPIO_TogglePin(LED_0_GPIO_Port, LED_0_Pin);
       HAL_Delay(200);
     }
+    NORFLASH_MemoryMappedMode();
     printf("bootloader will jump to app\n");
     // HAL_Delay(2000);
     // printf("On ex_flash: %c%c%c%c%c\r\n", temp3[0], temp3[1], temp3[2], temp3[3], temp3[4]);
@@ -167,7 +167,7 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.PLL.PLLM = 2;
   RCC_OscInitStruct.PLL.PLLN = 48;
   RCC_OscInitStruct.PLL.PLLP = 2;
-  RCC_OscInitStruct.PLL.PLLQ = 3;
+  RCC_OscInitStruct.PLL.PLLQ = 6;
   RCC_OscInitStruct.PLL.PLLR = 2;
   RCC_OscInitStruct.PLL.PLLRGE = RCC_PLL1VCIRANGE_3;
   RCC_OscInitStruct.PLL.PLLVCOSEL = RCC_PLL1VCOWIDE;

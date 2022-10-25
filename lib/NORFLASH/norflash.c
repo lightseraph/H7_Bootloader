@@ -429,9 +429,10 @@ int8_t NORFLASH_MemoryMappedMode(void)
 
 	if (HAL_QSPI_MemoryMapped(&hqspi, &cmd, &mem_mapped_cfg) != HAL_OK) // 进行配置
 	{
+		printf("mapped error\n");
 		return W25Qxx_ERROR_MemoryMapped; // 设置内存映射模式错误
 	}
-
+	printf("mapped success\n");
 	return QSPI_W25Qxx_OK; // 配置成功
 }
 
