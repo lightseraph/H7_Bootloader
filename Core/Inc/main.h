@@ -57,6 +57,10 @@ void Error_Handler(void);
 /* USER CODE END EFP */
 
 /* Private defines -----------------------------------------------------------*/
+#define NAND_NWAIT_Pin GPIO_PIN_6
+#define NAND_NWAIT_GPIO_Port GPIOD
+#define KEY_0_Pin GPIO_PIN_3
+#define KEY_0_GPIO_Port GPIOH
 #define LED_0_Pin GPIO_PIN_1
 #define LED_0_GPIO_Port GPIOB
 #define LED_1_Pin GPIO_PIN_0

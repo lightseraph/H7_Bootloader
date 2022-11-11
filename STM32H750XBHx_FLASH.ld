@@ -55,19 +55,21 @@ ENTRY(Reset_Handler)
 /* Highest address of the user mode stack */
 _estack = ORIGIN(DTCMRAM) + LENGTH(DTCMRAM);    /* end of RAM */
 /* Generate a link error if heap and stack don't fit into RAM */
-_Min_Heap_Size = 0x1600;      /* required amount of heap  */
+_Min_Heap_Size = 0x2000;      /* required amount of heap  */
 _Min_Stack_Size = 0x2000; /* required amount of stack */
 
 /* Specify the memory areas */
 MEMORY
 {
-DTCMRAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 128K
-RAM_D1 (xrw)      : ORIGIN = 0x24000000, LENGTH = 512K
-RAM_D2 (xrw)      : ORIGIN = 0x30000000, LENGTH = 288K
-RAM_D3 (xrw)      : ORIGIN = 0x38000000, LENGTH = 64K
-ITCMRAM (xrw)      : ORIGIN = 0x00000000, LENGTH = 64K
+DTCMRAM (xrw)      : ORIGIN = 0x20000000, LENGTH = 120K
+RAM_D1 (xrw)      : ORIGIN = 0x24000000, LENGTH = 480K
+RAM_D2 (xrw)      : ORIGIN = 0x30000000, LENGTH = 270K
+RAM_D3 (xrw)      : ORIGIN = 0x38000000, LENGTH = 60K
+ITCMRAM (xrw)      : ORIGIN = 0x00000000, LENGTH = 60K
 FLASH (rx)      : ORIGIN = 0x8000000, LENGTH = 128K
-
+SDRAM(xrw)      : ORIGIN = 0xC0465000, LENGTH = 57408K
+MEM1MAPBASE(xrw)  : ORIGIN = 0x24078800, LENGTH = 30K
+MEM2MAPBASE(xrw)  : ORIGIN = 0xC3C7F000, LENGTH = 3588K
 }
 
 /* Define output sections */
@@ -177,6 +179,39 @@ SECTIONS
     . = . + _Min_Stack_Size;
     . = ALIGN(8);
   } >DTCMRAM
+
+  .ram_d1 (NOLOAD):
+  {
+    . = ALIGN(4);
+    *(.ram_d1)
+    *(.ram_d1.*)
+    . = ALIGN(4);
+  } >RAM_D1
+
+  .sdram (NOLOAD) : ALIGN(4)
+  {
+    . = ALIGN(4);
+    *(.sdram)
+    *(.sdram.*)
+    . = ALIGN(4);
+
+  } >SDRAM
+
+.mem2mapbase (NOLOAD): ALIGN(64)
+  {
+    . = ALIGN(64);
+    *(.mem2mapbase)
+    *(.mem2mapbase.*)
+    . = ALIGN(64);
+  } >MEM2MAPBASE
+
+  .mem1mapbase (NOLOAD): ALIGN(64)
+  {
+    . = ALIGN(64);
+    *(.mem1mapbase)
+    *(.mem1mapbase.*)
+    . = ALIGN(64);
+  } >MEM1MAPBASE
 /*
 .nor_flash :
   {
