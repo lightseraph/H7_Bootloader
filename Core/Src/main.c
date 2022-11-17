@@ -138,7 +138,7 @@ int main(void)
     SysTick->VAL = 0;
     __disable_irq();
     JumpToApplication = (pFunction)(*(__IO uint32_t *)(QSPI_BASE + 0x3C000 + 4)); // 设置起始地址
-    __set_MSP(*(__IO uint32_t *)QSPI_BASE + 0x3C000);                             // 设置主堆栈指针
+    __set_MSP(*(__IO uint32_t *)(QSPI_BASE + 0x3C000));                           // 设置主堆栈指针
 
     JumpToApplication();
   }
